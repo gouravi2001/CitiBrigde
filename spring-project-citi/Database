@@ -8,6 +8,7 @@ user_id varchar(255)
 user_pswd varchar(255)
 
 Database entries
+id      user_id  user_id
 1	admin	FD2FA31BAFDDB7A56596C6F7DBFE449D
 2	Gouravi	771E38987A360B81437966536A82FC2E
 3	Atharva	AC46C663DAF0511182008627CC2BFAF3
