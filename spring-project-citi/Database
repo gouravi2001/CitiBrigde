@@ -1,16 +1,44 @@
 
 Database:Spring_jsp_demo
 
-Table: user
-Columns:
-id int AI PK 
-user_id varchar(255) 
-user_pswd varchar(255)
+user table
+id	int	NO	PRI		auto_increment
+user_id	varchar(255)	YES	UNI		
+user_pswd	varchar(255)	YES			
+quantity	int	YES		0	
+totalprice	decimal(10,2)	YES		0.00	
+stockname	varchar(255)	YES		stockname	
 
-Database entries
-id      user_id  user_id
-1	admin	FD2FA31BAFDDB7A56596C6F7DBFE449D
-2	Gouravi	771E38987A360B81437966536A82FC2E
-3	Atharva	AC46C663DAF0511182008627CC2BFAF3
-4	Shravani	34BECB040256B4E87401059E2C3ACDEC
-		
+
+userhistory table		
+id	int	NO	PRI		auto_increment
+user_id	varchar(255)	YES			
+user_pswd	varchar(255)	YES			
+quantity	int	YES		0	
+totalprice	decimal(10,2)	YES		0.00	
+stockname	varchar(255)	YES		stockname	
+
+
+user table entries
+1	admin	FD2FA31BAFDDB7A56596C6F7DBFE449D	0	0.00	stockname
+2	Gouravi	771E38987A360B81437966536A82FC2E	0	0.00	stockname
+3	Atharva	AC46C663DAF0511182008627CC2BFAF3	0	0.00	stockname
+4	Shravani	34BECB040256B4E87401059E2C3ACDEC	0	0.00	stockname
+35	meghna	71576892C5FDEEAA241BBCE3D866B330	0	0.00	stockname
+45	Alex	CEBCD9FD9976061CAB0CA475B24C80B5	0	0.00	stockname
+46	Rutuja	6BDF5BAA33E0302DCC9EA6253F24E393	0	0.00	stockname
+47	Abhilasha	8F0CB5F4C0740AC6DC0897723631C22C	0	0.00	stockname
+
+
+userhistory table entries
+1	Gouravi		2	7397.80	Bajaj Auto Limited
+2	Gouravi		4	37373.80	Maruti Suzuki India Limited
+3	Gouravi		5	6361.50	Mahindra & Mahindra Limited
+4	Gouravi		3	1039.20	ITC Limited
+5	Gouravi		1	18495.90	Nestlé India Limited
+6	shravani		4	5089.20	Mahindra & Mahindra Limited
+7	shravani		5	18494.50	Bajaj Auto Limited
+8	Gouravi		4	14795.60	Bajaj Auto Limited
+9	Gouravi		2	7376.90	Eicher Motors Limited
+10	Gouravi		9	24858.45	Hero MotoCorp Limited
+					
