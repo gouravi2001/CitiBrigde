@@ -11,15 +11,26 @@
 
 <style type="text/css">
   <%@include file="style.css" %>
+  .alert{
+  display:none
+  }
+  .alert-danger{
+  display:none
+  }
 </style>
 
 </head>
 
 <body>
 	
-	<h2>${errorMsgs}</h2>
+	
 	<div class="login-form">
-
+	<!--  
+	<div class="alert alert-danger" role="alert" id="alerting">
+  ${errorMsgs}
+</div>
+-->
+		<p class="danger"> ${errorMsgs} </p>
 		<div class="container-fluid">
 			<form method="post" action="login">
 
@@ -31,12 +42,17 @@
 					<input type="password" class="form-control" name="password"
 						placeholder="Password" />
 				</div>
-				<button type="submit" class="btn btn-dark btn-block mt-3">Login</button>
-
+				<button type="submit" class="btn btn-dark btn-block mt-3" >Login</button>
 			</form>
 		</div>
 	</div>
+<script>
 
+function showalert(){
+	document.getElementById("alerting").style.display="block";
+}
+
+</script>
 	
 </body>
 

@@ -64,10 +64,7 @@ public class StockService {
 		return ls;
 	}
 	
-	public static void main(String args[]) throws IOException {
-		StockService st=new StockService();
-		st.PassToGetStock("Automobile and Auto Components");
-	}
+	
 	
 
 }

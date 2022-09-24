@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -34,9 +35,11 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao{
 	}
 	
 	public static String USERID;
+	@SuppressWarnings("deprecation")
 	@Override
 	public User getUserById(String userId) {
 		String sql="select cast(aes_decrypt(unhex(user_pswd), 'secret') as char(50)) from user where user_id=?";
+		try {
 		return getJdbcTemplate().queryForObject(sql, new Object[] { userId },new RowMapper<User>() {
 			
 			@Override
@@ -47,6 +50,9 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao{
 				return user;
 			}
 		});
+		}catch(EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Welcome</title>
+<title>Information technology</title>
 <style type="text/css">
   <%@include file="style.css" %>
 </style>
@@ -12,37 +12,31 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg bg-light">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="#">Welcome ${userId}</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-				aria-controls="navbarNavDropdown" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavDropdown">
-				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="#">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Features</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">Pricing</a>
-					</li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#" role="button"
-						data-bs-toggle="dropdown" aria-expanded="false"> Dropdown link
-					</a>
-						<ul class="dropdown-menu">
-							<li><a class="dropdown-item" href="#">Action</a></li>
-							<li><a class="dropdown-item" href="#">Another action</a></li>
-							<li><a class="dropdown-item" href="#">Something else
-									here</a></li>
-						</ul></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+	<form method="post" action="welcome">
+	<div class="menu-wrap">
+    <input type="checkbox" class="toggler" />
+    <div class="hamburger"><div></div></div>
+    <div class="menu">
+      <div>
+        <div>
+          <ul>
+            <li><a href="welcome">Home</a></li>
+            <li><input value="My portfolio" type="submit" name="Auto" class="MyPort"/></li>
+            <li><input type="submit" name="Auto" value="Automobile and Auto Components" id="auto1" class="buttons" onclick="showLoader()"/></li>
+            <li><input type="submit" name="Auto" value="Fast Moving Consumer Goods" id="fast1" class="buttons"/></li>
+		<li><input type="submit" name="Auto" value="Financial Services" id="finance1" class="buttons"/></li>
+		<li><input type="submit" name="Auto" value="Healthcare" id="health1" class="buttons"/></li>
+		<li><input type="submit" name="Auto" value="Information Technology" id="it1" class="buttons"/></li>
+            <li><input value="My portfolio" type="submit" name="Auto" class="navbuttons"/></li>
+            <li><input value="Log out" type="submit" name="Auto" class="navBtn"/></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+ </form>
+  <header class="showcase">
+    <div class="container showcase-inner">
 
 	
 	<div class="stockSectorData">
@@ -117,6 +111,8 @@
 	</table>
 	</form>
 	</div>
+	</div>
+	</header>
 	<script type="text/javascript">
 	
 	

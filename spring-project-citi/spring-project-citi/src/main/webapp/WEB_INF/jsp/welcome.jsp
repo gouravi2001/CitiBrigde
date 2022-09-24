@@ -1,8 +1,18 @@
 <html>
 <head>
-<title>Welcome</title>
+<title>Sector based Stock Recommendation</title>
 <style type="text/css">
   <%@include file="style.css" %>
+  .navBtn{
+   display: inline-block;
+    border: none;
+    background-color: var(--primary-color);
+    color: wheat;
+    padding: 0.75rem 1.5rem;
+    margin-top: 1rem;
+    text-decoration: none;
+    transition: opacity 1s ease-in;
+  }
 </style>
 <!--  
 <link href="webjars/bootstrap/4.6.0/css/bootstrap.min.css"
@@ -12,20 +22,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 -->
-<style>
 
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {background-color: #f2f2f2;}
-</style>
 </head>
 <body>
 <form method="post" action="welcome">
@@ -36,9 +33,9 @@ tr:nth-child(even) {background-color: #f2f2f2;}
       <div>
         <div>
           <ul>
-            <li><a href="welcome.jsp" rel="noreferrer">Home</a></li>
-            <li><input value="My portfolio" type="submit" name="Auto" class="MyPort"/></li>
-            
+            <li><a href="welcome" rel="noreferrer">Home</a></li>
+            <li><input value="My portfolio" type="submit" name="Auto"  class="no-outline" /></li>
+            <li><input value="Log out" type="submit" name="Auto"  class="no-outline" /></li>
           </ul>
         </div>
       </div>
@@ -57,20 +54,26 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 <header class="showcase">
     <div class="container showcase-inner">
 
-
-      <h1>SECTOR BASED TRADE RECOMMENDATION SYSTEM</h1>
-      <p>
+	<div class="row">
+		<div class="col-md-8 col-sm-12 align-self-center">
+			<h1>SECTOR BASED TRADE RECOMMENDATION SYSTEM</h1>
+		</div>
+	</div>
+      
+      <p class="headerText">
         Recommender systems that can suggest the user when to buy and sell stocks can be of immense help to those who wish to trade in stocks.
-        Recommender systems capable of discovering patterns in stock price movements and generating stock recommendations based on the patterns thus discovered can significantly supplement the decision-making process of a stock trader.
-        
+        Recommender systems capable of discovering patterns in stock price movements and generating stock recommendations based on the patterns thus discovered can significantly supplement the decision-making process of a stock trader.  
       </p>
-	<div id="load"></div>
-		<input type="submit" name="Auto" value="Automobile and Auto Components" id="auto1" class="buttons"/> 
-		<input type="submit" name="Auto" value="Fast Moving Consumer Goods" id="fast1" class="buttons"/> 
-		<input type="submit" name="Auto" value="Financial Services" id="finance1" class="buttons"/> 
-		<input type="submit" name="Auto" value="Healthcare" id="health1" class="buttons"/> 
-		<input type="submit" name="Auto" value="Information Technology" id="it1" class="buttons"/>
-	
+	<div id="loader"></div>
+		<div class=" row">
+			<input type="submit" name="Auto" value="Automobile and Auto Components" id="auto1" class="buttons" onclick="showLoader()"/> 
+			<input type="submit" name="Auto" value="Fast Moving Consumer Goods" id="fast1" class="col-sm-4  buttons" onclick="showLoader()"/> 
+			<input type="submit" name="Auto" value="Financial Services" id="finance1" class="col-sm-4  buttons" onclick="showLoader()"/> 
+		</div>
+		<div class="row">
+			<input type="submit" name="Auto" value="Healthcare" id="health1" class="col-sm-4 buttons" onclick="showLoader()"/> 
+			<input type="submit" name="Auto" value="Information Technology" id="it1" class="col-sm-4 buttons" onclick="showLoader()"/>
+		</div>
 	</div>
 
   </header>
@@ -83,6 +86,15 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 	           document.getElementById('load').style.visibility="hidden";
 	    }
 	  }
+	
+	function showLoader(){
+		console.log("hey button is clicked")
+		let allButtons = document.getElementsByClassName('buttons');
+		for (let i = 0; i < allButtons.length; i++) {
+			  allButtons[i].style.display = "none";
+		}
+		document.getElementById("loader").style.display = "block";
+	}
 	
 	</script>
 </body>

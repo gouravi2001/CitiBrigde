@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Welcome</title>
+<title>Financial Services</title>
 <style type="text/css">
   <%@include file="style.css" %>
 </style>
@@ -20,8 +20,15 @@
       <div>
         <div>
           <ul>
-            <li><a href="welcome.jsp">Home</a></li>
-            <li><input value="My portfolio" type="submit" name="Auto" class="MyPort"/></li>
+            <li><a href="welcomes">Home</a></li>
+            <li><input type="submit" name="Auto" value="Automobile and Auto Components" id="auto1" class="buttons" onclick="showLoader()"/></li>
+            <li><input type="submit" name="Auto" value="Fast Moving Consumer Goods" id="fast1" class="buttons"/></li>
+		<li><input type="submit" name="Auto" value="Financial Services" id="finance1" class="buttons"/></li>
+		<li><input type="submit" name="Auto" value="Healthcare" id="health1" class="buttons"/></li>
+		<li><input type="submit" name="Auto" value="Information Technology" id="it1" class="buttons"/></li>
+            <li><input value="My portfolio" type="submit" name="Auto" class="navbuttons"/></li>
+            
+            <li><input value="Log out" type="submit" name="Auto" class="navBtn"/></li>
 
           </ul>
         </div>

@@ -8,11 +8,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 //import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -67,7 +69,22 @@ public class LoginController {
 		return s1;
 	}
 	
-	
+	public User settingUser(int t) throws IOException {
+		User u=new User();
+		BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
+	    String last = null, line;
+
+	    while ((line = input.readLine()) != null) { 
+	        last = line;
+	    }
+		u.setUserId(last);
+		u.setPassword(pass);
+		u.setQuantity(t);
+		double price=ls1.get(0).getPrice().doubleValue();
+		u.setTotalprice(Double.valueOf(t)*price);
+		u.setStockname(ls1.get(0).getName());
+		return u;
+	}
 	
 	@RequestMapping(value = "/auto", method = RequestMethod.POST)
 	public String autoPost(ModelMap model,@RequestParam String SavingStock1,@RequestParam String quant1,@RequestParam String quant2,@RequestParam String quant3,@RequestParam String quant4,@RequestParam String quant5) throws IOException {
@@ -75,107 +92,63 @@ public class LoginController {
 		s1=populateTable(ls1);
 		setAttribute(model);
 		model.addAttribute("sector","Automobile and Auto Components");
-	
+		int flag=0;
         
 		if(!"".equals(quant1) && quant1.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant1);
 			if("Save 1st stock".equals(SavingStock1)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(0).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(0).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
+				flag=1;
+				
 			}
 			
 		}
 		if(!"".equals(quant2) && quant2.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant2);
 			if("Save 2nd stock".equals(SavingStock1)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(1).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(1).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
+				flag=1;
+				
 			}
 			
 		}
 		if(!"".equals(quant3) && quant3.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant3);
 			if("Save 3rd stock".equals(SavingStock1)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(2).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(2).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
+				flag=1;
+				
 			}
 			
 		}
 		if(!"".equals(quant4) && quant4.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant4);
 			if("Save 4th stock".equals(SavingStock1)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(3).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(3).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
+				flag=1;
+				
 			}
 			
 		}
 		if(!"".equals(quant5) && quant5.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant5);
 			if("Save 5th stock".equals(SavingStock1)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(4).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(4).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
+				flag=1;
+				
 			}
 			
+		}
+		if(flag==1) {
+			model.addAttribute("sucess","Sucessful");
+		}
+		else {
+			model.addAttribute("sucess","Failed");
 		}
 		return "auto";
 	}
@@ -195,19 +168,7 @@ public class LoginController {
 		if(!"".equals(quant6) && quant6.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant6);
 			if("Save 1st stock".equals(SavingStock2)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(0).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(0).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -215,19 +176,7 @@ public class LoginController {
 		if(!"".equals(quant7) && quant7.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant7);
 			if("Save 2nd stock".equals(SavingStock2)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(1).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(1).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -235,19 +184,7 @@ public class LoginController {
 		if(!"".equals(quant8) && quant8.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant8);
 			if("Save 3rd stock".equals(SavingStock2)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(2).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(2).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -255,19 +192,7 @@ public class LoginController {
 		if(!"".equals(quant9) && quant9.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant9);
 			if("Save 4th stock".equals(SavingStock2)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(3).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(3).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -275,19 +200,7 @@ public class LoginController {
 		if(!"".equals(quant10) && quant10.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant10);
 			if("Save 5th stock".equals(SavingStock2)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(4).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(4).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -311,19 +224,7 @@ public class LoginController {
 		if(!"".equals(quant11) && quant11.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant11);
 			if("Save 1st stock".equals(SavingStock3)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(0).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(0).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -331,19 +232,7 @@ public class LoginController {
 		if(!"".equals(quant12) && quant12.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant12);
 			if("Save 2nd stock".equals(SavingStock3)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(1).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(1).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -351,19 +240,7 @@ public class LoginController {
 		if(!"".equals(quant13) && quant13.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant13);
 			if("Save 3rd stock".equals(SavingStock3)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(2).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(2).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -371,19 +248,7 @@ public class LoginController {
 		if(!"".equals(quant14) && quant14.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant14);
 			if("Save 4th stock".equals(SavingStock3)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(3).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(3).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -391,19 +256,7 @@ public class LoginController {
 		if(!"".equals(quant15) && quant15.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant15);
 			if("Save 5th stock".equals(SavingStock3)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(4).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(4).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -426,19 +279,7 @@ public class LoginController {
 		if(!"".equals(quant16) && quant16.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant16);
 			if("Save 1st stock".equals(SavingStock4)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(0).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(0).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -446,19 +287,7 @@ public class LoginController {
 		if(!"".equals(quant17) && quant17.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant17);
 			if("Save 2nd stock".equals(SavingStock4)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(1).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(1).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -466,19 +295,7 @@ public class LoginController {
 		if(!"".equals(quant18) && quant18.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant18);
 			if("Save 3rd stock".equals(SavingStock4)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(2).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(2).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -486,19 +303,7 @@ public class LoginController {
 		if(!"".equals(quant19) && quant19.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant19);
 			if("Save 4th stock".equals(SavingStock4)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(3).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(3).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -506,19 +311,7 @@ public class LoginController {
 		if(!"".equals(quant20) && quant20.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant20);
 			if("Save 5th stock".equals(SavingStock4)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(4).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(4).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -541,19 +334,7 @@ public class LoginController {
 		if(!"".equals(quant21) && quant21.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant21);
 			if("Save 1st stock".equals(SavingStock5)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(0).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(0).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -561,19 +342,7 @@ public class LoginController {
 		if(!"".equals(quant22) && quant22.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant22);
 			if("Save 2nd stock".equals(SavingStock5)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(1).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(1).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -581,19 +350,7 @@ public class LoginController {
 		if(!"".equals(quant23) && quant23.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant23);
 			if("Save 3rd stock".equals(SavingStock5)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(2).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(2).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -601,19 +358,7 @@ public class LoginController {
 		if(!"".equals(quant24) && quant24.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant24);
 			if("Save 4th stock".equals(SavingStock5)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(3).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(3).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -621,19 +366,7 @@ public class LoginController {
 		if(!"".equals(quant25) && quant25.matches("-?\\d+(\\.\\d+)?")) {
 			int t=Integer.parseInt(quant25);
 			if("Save 5th stock".equals(SavingStock5)) {
-				User u=new User();
-				BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
-			    String last = null, line;
-
-			    while ((line = input.readLine()) != null) { 
-			        last = line;
-			    }
-				u.setUserId(last);
-				u.setPassword(pass);
-				u.setQuantity(t);
-				double price=ls1.get(4).getPrice().doubleValue();
-				u.setTotalprice(Double.valueOf(t)*price);
-				u.setStockname(ls1.get(4).getName());
+				User u=settingUser(t);
 				userService.UserUpdateStock(u);
 			}
 			
@@ -657,7 +390,15 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String welcomePage(ModelMap model,@RequestParam String userId,@RequestParam String password) throws IOException {
+		if("".equals(userId) || "".equals(password) || userId.length()==1 || password.length()==1) {
+			model.put("errorMsgs","Please provide the correct userid or password");
+			return "login";
+		}
 		User user=userService.getUserByUserId(userId);
+		if(user==null) {
+			model.put("errorMsgs","Please provide the correct userid or password");
+			return "login";
+		}
 		if(user.getPassword().equals(password)) {
 			try (FileWriter f = new FileWriter("C://Users//DeLL//OneDrive//Desktop//user.txt", true); 
 					BufferedWriter b = new BufferedWriter(f); 
@@ -667,11 +408,13 @@ public class LoginController {
 			{ 
 				i.printStackTrace(); 
 			}
-
+			
+			
 			
 			model.addAttribute("userId", userId);
 			return "welcome";
 		}
+		
 		model.put("errorMsgs","Please provide the correct userid or password");
 		return "login";
 	}
@@ -681,11 +424,16 @@ public class LoginController {
 		
 		return "welcome";
 	}
-		
+	
+	
+	
 	@RequestMapping(value = "/welcome", method = RequestMethod.POST)
 	public String welcomePost(ModelMap model,@RequestParam String Auto) throws IOException, InterruptedException {
 		
 		model.addAttribute("sector",Auto);
+		if("Log out".equals(Auto)) {
+			return "login";
+		}
 		if("My portfolio".equals(Auto)) {
 			return "portfolio";
 		}
@@ -730,6 +478,23 @@ public class LoginController {
 		
 		return "welcome";
 	}
+	
+//	@RequestMapping("/error")
+//	public String handleError(HttpServletRequest request) {
+//	    Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+//	    
+//	    if (status != null) {
+//	        Integer statusCode = Integer.valueOf(status.toString());
+//	    
+//	        if(statusCode == HttpStatus.NOT_FOUND.value()) {
+//	            return "error-404";
+//	        }
+//	        else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+//	            return "error-500";
+//	        }
+//	    }
+//	    return "error";
+//	}
 	private void setAttribute(ModelMap model) {
 		
 		model.addAttribute(keys[0][0], s1[0][0]);
