@@ -22,13 +22,13 @@
           <ul>
             <li><a href="welcome">Home</a></li>
             
-            <li><input type="submit" name="Auto" value="Automobile and Auto Components" id="auto1" class="buttons" onclick="showLoader()"/></li>
-		<li><input type="submit" name="Auto" value="Fast Moving Consumer Goods" id="fast1" class="buttons"/></li>
-		<li><input type="submit" name="Auto" value="Financial Services" id="finance1" class="buttons"/></li>
-		<li><input type="submit" name="Auto" value="Healthcare" id="health1" class="buttons"/></li>
-		<li><input type="submit" name="Auto" value="Information Technology" id="it1" class="buttons"/></li>
-		<li><input value="My portfolio" type="submit" name="Auto" class="MyPort"/></li>
-            <li><input value="Log out" type="submit" name="Auto" class="navBtn"/></li>
+            <li><input type="submit" name="Auto" value="Automobile and Auto Components" id="auto1" class="no-outline"/></li>
+		<li><input type="submit" name="Auto" value="Fast Moving Consumer Goods" id="fast1" class="no-outline"/></li>
+		<li><input type="submit" name="Auto" value="Financial Services" id="finance1" class="no-outline"/></li>
+		<li><input type="submit" name="Auto" value="Healthcare" id="health1" class="no-outline"/></li>
+		<li><input type="submit" name="Auto" value="Information Technology" id="it1" class="no-outline"/></li>
+		<li><input value="My portfolio" type="submit" name="Auto" class="no-outline"/></li>
+            <li><input value="Log out" type="submit" name="Auto" class="no-outline"/></li>
           </ul>
         </div>
       </div>
@@ -64,7 +64,9 @@
 				<input type="text" class="form-control" name="quant6"
 						placeholder="Enter Quantity" />
 </td>
-				<td><input name="SavingStock2" value="Save 1st stock" type="submit"></td>
+				<td><input name="SavingStock2" value="Save 1st stock" type="submit" class="tableButtons"></td>
+				<td>${success1}</td>
+				<td>${failed1}</td>
 				
 			</tr>
 			
@@ -76,7 +78,9 @@
 				<td>${volume1}</td>
 				<td><input type="text" class="form-control" name="quant7"
 						placeholder="Enter Quantity" /></td>
-				<td><input name="SavingStock2" value="Save 2nd stock" type="submit"></td>
+				<td><input name="SavingStock2" value="Save 2nd stock" type="submit" class="tableButtons"></td>
+				<td>${success2}</td>
+				<td>${failed2}</td>
 			</tr>
 			
 	 		<tr>
@@ -86,7 +90,9 @@
 				<td>${volume2}</td>
 				<td><input type="text" class="form-control" name="quant8"
 						placeholder="Enter Quantity" /></td>
-				<td><input name="SavingStock2" value="Save 3rd stock" type="submit"/></td>
+				<td><input name="SavingStock2" value="Save 3rd stock" type="submit" class="tableButtons"/></td>
+				<td>${success3}</td>
+				<td>${failed3}</td>
 			</tr>
 			<tr>
 				<th scope="row">${name3}</th>
@@ -95,7 +101,9 @@
 				<td>${volume3}</td>
 				<td><input type="text" class="form-control" name="quant9"
 						placeholder="Enter Quantity" /></td>
-				<td><input name="SavingStock2" value="Save 4th stock" type="submit"/></td>
+				<td><input name="SavingStock2" value="Save 4th stock" type="submit" class="tableButtons"/></td>
+				<td>${success4}</td>
+				<td>${failed4}</td>
 			</tr>
 			<tr>
 				<th scope="row">${name4}</th>
@@ -104,7 +112,9 @@
 				<td>${volume4}</td>
 				<td><input type="text" class="form-control" name="quant10"
 						placeholder="Enter Quantity" /></td>
-				<td><input name="SavingStock2" value="Save 5th stock" type="submit"/></td>
+				<td><input name="SavingStock2" value="Save 5th stock" type="submit" class="tableButtons"/></td>
+				<td>${success5}</td>
+				<td>${failed5}</td>
 			</tr>
 		
 		</tbody>

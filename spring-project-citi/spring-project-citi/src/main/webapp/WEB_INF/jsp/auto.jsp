@@ -65,8 +65,8 @@
 						placeholder="Enter Quantity" />
 </td>
 				<td><input name="SavingStock1" value="Save 1st stock" type="submit" class="tableButtons"/></td>
-				<td>${sucess}</td>
-				
+				<td>${success1}</td>
+				<td>${failed1}</td>
 			</tr>
 			
 			  
@@ -78,7 +78,8 @@
 				<td><input type="text" class="form-control" name="quant2"
 						placeholder="Enter Quantity" /></td>
 				<td><input name="SavingStock1" value="Save 2nd stock" type="submit" class="tableButtons"/></td>
-				<td>${sucess}</td>
+				<td>${success2}</td>
+				<td>${failed2}</td>
 			</tr>
 			
 	 		<tr>
@@ -89,7 +90,8 @@
 				<td><input type="text" class="form-control" name="quant3"
 						placeholder="Enter Quantity" /></td>
 				<td><input name="SavingStock1" value="Save 3rd stock" type="submit" class="tableButtons"/></td>
-				<td>${sucess}</td>
+				<td>${success3}</td>
+				<td>${failed3}</td>
 			</tr>
 			<tr>
 				<th scope="row">${name3}</th>
@@ -99,7 +101,8 @@
 				<td><input type="text" class="form-control" name="quant4"
 						placeholder="Enter Quantity" /></td>
 				<td><input name="SavingStock1" value="Save 4th stock" type="submit" class="tableButtons"/></td>
-				<td>${sucess}</td>
+				<td>${success4}</td>
+				<td>${failed4}</td>
 			</tr>
 			<tr>
 				<th scope="row">${name4}</th>
@@ -109,7 +112,8 @@
 				<td><input type="text" class="form-control" name="quant5"
 						placeholder="Enter Quantity" /></td>
 				<td><input name="SavingStock1" value="Save 5th stock" type="submit" class="tableButtons"> </td>
-				<td>${sucess}</td>
+				<td>${success5}</td>
+				<td>${failed5}</td>
 			</tr>
 		
 		</tbody>

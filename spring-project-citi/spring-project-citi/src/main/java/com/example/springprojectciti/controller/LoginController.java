@@ -8,13 +8,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 //import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.springprojectciti.controller.bean.User;
 import com.example.springprojectciti.dao.StockDao;
-import com.example.springprojectciti.dao.impl.UserDaoImpl;
 import com.example.springprojectciti.service.StockService;
 import com.example.springprojectciti.service.UserService;
 
@@ -69,7 +65,7 @@ public class LoginController {
 		return s1;
 	}
 	
-	public User settingUser(int t) throws IOException {
+	public User settingUser(int t,int i) throws IOException {
 		User u=new User();
 		BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
 	    String last = null, line;
@@ -80,9 +76,9 @@ public class LoginController {
 		u.setUserId(last);
 		u.setPassword(pass);
 		u.setQuantity(t);
-		double price=ls1.get(0).getPrice().doubleValue();
+		double price=ls1.get(i).getPrice().doubleValue();
 		u.setTotalprice(Double.valueOf(t)*price);
-		u.setStockname(ls1.get(0).getName());
+		u.setStockname(ls1.get(i).getName());
 		return u;
 	}
 	
@@ -92,67 +88,102 @@ public class LoginController {
 		s1=populateTable(ls1);
 		setAttribute(model);
 		model.addAttribute("sector","Automobile and Auto Components");
-		int flag=0;
-        
-		if(!"".equals(quant1) && quant1.matches("-?\\d+(\\.\\d+)?")) {
+		String s="Quantity must be positive number or greater than zero";
+		int f1=0;
+		int f2=0;
+		int f3=0;
+		int f4=0;
+		int f5=0;
+		if(!"".equals(quant1) && quant1.charAt(0)!='-' && Safe(quant1)) {
 			int t=Integer.parseInt(quant1);
 			if("Save 1st stock".equals(SavingStock1)) {
-				User u=settingUser(t);
+				User u=settingUser(t,0);
 				userService.UserUpdateStock(u);
-				flag=1;
-				
+				s="Successful";
+				model.addAttribute("success1",s);
+				f1=1;
 			}
-			
 		}
-		if(!"".equals(quant2) && quant2.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant2) && quant2.charAt(0)!='-' && Safe(quant2)) {
 			int t=Integer.parseInt(quant2);
 			if("Save 2nd stock".equals(SavingStock1)) {
-				User u=settingUser(t);
+				User u=settingUser(t,1);
 				userService.UserUpdateStock(u);
-				flag=1;
-				
+				s="Successful";
+				model.addAttribute("success2",s);
+				f2=1;
 			}
 			
 		}
-		if(!"".equals(quant3) && quant3.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant3) && quant3.charAt(0)!='-' && Safe(quant3)) {
 			int t=Integer.parseInt(quant3);
 			if("Save 3rd stock".equals(SavingStock1)) {
-				User u=settingUser(t);
+				User u=settingUser(t,2);
 				userService.UserUpdateStock(u);
-				flag=1;
-				
+				s="Successful";
+				model.addAttribute("success3",s);
+				f3=1;
 			}
 			
 		}
-		if(!"".equals(quant4) && quant4.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant4) && quant4.charAt(0)!='-' && Safe(quant4)) {
 			int t=Integer.parseInt(quant4);
 			if("Save 4th stock".equals(SavingStock1)) {
-				User u=settingUser(t);
+				User u=settingUser(t,3);
 				userService.UserUpdateStock(u);
-				flag=1;
-				
+				s="Successful";
+				model.addAttribute("success4",s);
+				f4=1;
 			}
 			
 		}
-		if(!"".equals(quant5) && quant5.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant5) && quant5.charAt(0)!='-' && Safe(quant5)) {
 			int t=Integer.parseInt(quant5);
 			if("Save 5th stock".equals(SavingStock1)) {
-				User u=settingUser(t);
+				User u=settingUser(t,4);
 				userService.UserUpdateStock(u);
-				flag=1;
-				
+				s="Successful";
+				model.addAttribute("success5",s);
+				f5=1;
 			}
 			
 		}
-		if(flag==1) {
-			model.addAttribute("sucess","Sucessful");
+		if(f1==0 && "Save 1st stock".equals(SavingStock1)) {
+			model.addAttribute("failed1", s);
 		}
-		else {
-			model.addAttribute("sucess","Failed");
+		if(f2==0 && "Save 2nd stock".equals(SavingStock1)) {
+			model.addAttribute("failed2", s);
+		}
+		if(f3==0 && "Save 3rd stock".equals(SavingStock1)) {
+			model.addAttribute("failed3", s);
+		}
+		if(f4==0 && "Save 4th stock".equals(SavingStock1)) {
+			model.addAttribute("failed4", s);
+		}
+		if(f5==0 && "Save 5th stock".equals(SavingStock1)) {
+			model.addAttribute("failed5", s);
 		}
 		return "auto";
 	}
 	
+	private boolean Safe(String quant1) {
+		// TODO Auto-generated method stub
+		for(int i=0;i<quant1.length();i++) {
+			char c=quant1.charAt(i);
+			if(c<'0' || c>'9') {
+				return false;
+			}
+		}
+		int t=Integer.parseInt(quant1);
+		if(t<=0) {
+			return false;
+		}
+		return true;
+	}
 	@RequestMapping(value = "/auto", method = RequestMethod.GET)
 	public String autoGet(ModelMap model) {
 		
@@ -165,45 +196,84 @@ public class LoginController {
 		s1=populateTable(ls1);
 		setAttribute(model);
 		model.addAttribute("sector","Fast Moving Consumer Goods");
-		if(!"".equals(quant6) && quant6.matches("-?\\d+(\\.\\d+)?")) {
+		String s="Quantity must be positive number or greater than zero";
+		int f1=0;
+		int f2=0;
+		int f3=0;
+		int f4=0;
+		int f5=0;
+		if(!"".equals(quant6) && quant6.charAt(0)!='-' && Safe(quant6)) {
 			int t=Integer.parseInt(quant6);
 			if("Save 1st stock".equals(SavingStock2)) {
-				User u=settingUser(t);
+				User u=settingUser(t,0);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success1",s);
+				f1=1;
 			}
-			
 		}
-		if(!"".equals(quant7) && quant7.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant7) && quant7.charAt(0)!='-' && Safe(quant7)) {
 			int t=Integer.parseInt(quant7);
 			if("Save 2nd stock".equals(SavingStock2)) {
-				User u=settingUser(t);
+				User u=settingUser(t,1);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success2",s);
+				f2=1;
 			}
 			
 		}
-		if(!"".equals(quant8) && quant8.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant8) && quant8.charAt(0)!='-' && Safe(quant8)) {
 			int t=Integer.parseInt(quant8);
 			if("Save 3rd stock".equals(SavingStock2)) {
-				User u=settingUser(t);
+				User u=settingUser(t,2);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success3",s);
+				f3=1;
 			}
 			
 		}
-		if(!"".equals(quant9) && quant9.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant9) && quant9.charAt(0)!='-' && Safe(quant9)) {
 			int t=Integer.parseInt(quant9);
 			if("Save 4th stock".equals(SavingStock2)) {
-				User u=settingUser(t);
+				User u=settingUser(t,3);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success4",s);
+				f4=1;
 			}
 			
 		}
-		if(!"".equals(quant10) && quant10.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant10) && quant10.charAt(0)!='-' && Safe(quant10)) {
 			int t=Integer.parseInt(quant10);
 			if("Save 5th stock".equals(SavingStock2)) {
-				User u=settingUser(t);
+				User u=settingUser(t,4);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success5",s);
+				f5=1;
 			}
 			
+		}
+		if(f1==0 && "Save 1st stock".equals(SavingStock2)) {
+			model.addAttribute("failed1", s);
+		}
+		if(f2==0 && "Save 2nd stock".equals(SavingStock2)) {
+			model.addAttribute("failed2", s);
+		}
+		if(f3==0 && "Save 3rd stock".equals(SavingStock2)) {
+			model.addAttribute("failed3", s);
+		}
+		if(f4==0 && "Save 4th stock".equals(SavingStock2)) {
+			model.addAttribute("failed4", s);
+		}
+		if(f5==0 && "Save 5th stock".equals(SavingStock2)) {
+			model.addAttribute("failed5", s);
 		}
 		return "fast";
 	}
@@ -221,45 +291,84 @@ public class LoginController {
 		setAttribute(model);
 		
 		model.addAttribute("sector","Finance");
-		if(!"".equals(quant11) && quant11.matches("-?\\d+(\\.\\d+)?")) {
+		String s="Quantity must be positive number or greater than zero";
+		int f1=0;
+		int f2=0;
+		int f3=0;
+		int f4=0;
+		int f5=0;
+		if(!"".equals(quant11) && quant11.charAt(0)!='-' && Safe(quant11)) {
 			int t=Integer.parseInt(quant11);
 			if("Save 1st stock".equals(SavingStock3)) {
-				User u=settingUser(t);
+				User u=settingUser(t,0);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success1",s);
+				f1=1;
 			}
-			
 		}
-		if(!"".equals(quant12) && quant12.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant12) && quant12.charAt(0)!='-' && Safe(quant12)) {
 			int t=Integer.parseInt(quant12);
 			if("Save 2nd stock".equals(SavingStock3)) {
-				User u=settingUser(t);
+				User u=settingUser(t,1);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success2",s);
+				f2=1;
 			}
 			
 		}
-		if(!"".equals(quant13) && quant13.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant13) && quant13.charAt(0)!='-' && Safe(quant13)) {
 			int t=Integer.parseInt(quant13);
 			if("Save 3rd stock".equals(SavingStock3)) {
-				User u=settingUser(t);
+				User u=settingUser(t,2);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success3",s);
+				f3=1;
 			}
 			
 		}
-		if(!"".equals(quant14) && quant14.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant14) && quant14.charAt(0)!='-' && Safe(quant14)) {
 			int t=Integer.parseInt(quant14);
 			if("Save 4th stock".equals(SavingStock3)) {
-				User u=settingUser(t);
+				User u=settingUser(t,3);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success4",s);
+				f4=1;
 			}
 			
 		}
-		if(!"".equals(quant15) && quant15.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant15) && quant15.charAt(0)!='-' && Safe(quant15)) {
 			int t=Integer.parseInt(quant15);
 			if("Save 5th stock".equals(SavingStock3)) {
-				User u=settingUser(t);
+				User u=settingUser(t,4);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success5",s);
+				f5=1;
 			}
 			
+		}
+		if(f1==0 && "Save 1st stock".equals(SavingStock3)) {
+			model.addAttribute("failed1", s);
+		}
+		if(f2==0 && "Save 2nd stock".equals(SavingStock3)) {
+			model.addAttribute("failed2", s);
+		}
+		if(f3==0 && "Save 3rd stock".equals(SavingStock3)) {
+			model.addAttribute("failed3", s);
+		}
+		if(f4==0 && "Save 4th stock".equals(SavingStock3)) {
+			model.addAttribute("failed4", s);
+		}
+		if(f5==0 && "Save 5th stock".equals(SavingStock3)) {
+			model.addAttribute("failed5", s);
 		}
 		return "finance";
 	}
@@ -276,45 +385,84 @@ public class LoginController {
 		s1=populateTable(ls1);
 		setAttribute(model);
 		model.addAttribute("sector","Health care");
-		if(!"".equals(quant16) && quant16.matches("-?\\d+(\\.\\d+)?")) {
+		String s="Quantity must be positive number or greater than zero";
+		int f1=0;
+		int f2=0;
+		int f3=0;
+		int f4=0;
+		int f5=0;
+		if(!"".equals(quant16) && quant16.charAt(0)!='-' && Safe(quant16)) {
 			int t=Integer.parseInt(quant16);
 			if("Save 1st stock".equals(SavingStock4)) {
-				User u=settingUser(t);
+				User u=settingUser(t,0);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success1",s);
+				f1=1;
 			}
-			
 		}
-		if(!"".equals(quant17) && quant17.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant17) && quant17.charAt(0)!='-' && Safe(quant17)) {
 			int t=Integer.parseInt(quant17);
 			if("Save 2nd stock".equals(SavingStock4)) {
-				User u=settingUser(t);
+				User u=settingUser(t,1);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success2",s);
+				f2=1;
 			}
 			
 		}
-		if(!"".equals(quant18) && quant18.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant18) && quant18.charAt(0)!='-' && Safe(quant18)) {
 			int t=Integer.parseInt(quant18);
 			if("Save 3rd stock".equals(SavingStock4)) {
-				User u=settingUser(t);
+				User u=settingUser(t,2);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success3",s);
+				f3=1;
 			}
 			
 		}
-		if(!"".equals(quant19) && quant19.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant19) && quant19.charAt(0)!='-' && Safe(quant19)) {
 			int t=Integer.parseInt(quant19);
 			if("Save 4th stock".equals(SavingStock4)) {
-				User u=settingUser(t);
+				User u=settingUser(t,3);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success4",s);
+				f4=1;
 			}
 			
 		}
-		if(!"".equals(quant20) && quant20.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant20) && quant20.charAt(0)!='-' && Safe(quant20)) {
 			int t=Integer.parseInt(quant20);
 			if("Save 5th stock".equals(SavingStock4)) {
-				User u=settingUser(t);
+				User u=settingUser(t,4);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success5",s);
+				f5=1;
 			}
 			
+		}
+		if(f1==0 && "Save 1st stock".equals(SavingStock4)) {
+			model.addAttribute("failed1", s);
+		}
+		if(f2==0 && "Save 2nd stock".equals(SavingStock4)) {
+			model.addAttribute("failed2", s);
+		}
+		if(f3==0 && "Save 3rd stock".equals(SavingStock4)) {
+			model.addAttribute("failed3", s);
+		}
+		if(f4==0 && "Save 4th stock".equals(SavingStock4)) {
+			model.addAttribute("failed4", s);
+		}
+		if(f5==0 && "Save 5th stock".equals(SavingStock4)) {
+			model.addAttribute("failed5", s);
 		}
 		return "health";
 	}
@@ -331,45 +479,84 @@ public class LoginController {
 		s1=populateTable(ls1);
 		setAttribute(model);
 		model.addAttribute("sector","Information technology");
-		if(!"".equals(quant21) && quant21.matches("-?\\d+(\\.\\d+)?")) {
+		String s="Quantity must be positive number or greater than zero";
+		int f1=0;
+		int f2=0;
+		int f3=0;
+		int f4=0;
+		int f5=0;
+		if(!"".equals(quant21) && quant21.charAt(0)!='-' && Safe(quant21)) {
 			int t=Integer.parseInt(quant21);
 			if("Save 1st stock".equals(SavingStock5)) {
-				User u=settingUser(t);
+				User u=settingUser(t,0);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success1",s);
+				f1=1;
 			}
-			
 		}
-		if(!"".equals(quant22) && quant22.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant22) && quant22.charAt(0)!='-' && Safe(quant22)) {
 			int t=Integer.parseInt(quant22);
 			if("Save 2nd stock".equals(SavingStock5)) {
-				User u=settingUser(t);
+				User u=settingUser(t,1);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success2",s);
+				f2=1;
 			}
 			
 		}
-		if(!"".equals(quant23) && quant23.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant23) && quant23.charAt(0)!='-' && Safe(quant23)) {
 			int t=Integer.parseInt(quant23);
 			if("Save 3rd stock".equals(SavingStock5)) {
-				User u=settingUser(t);
+				User u=settingUser(t,2);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success3",s);
+				f3=1;
 			}
 			
 		}
-		if(!"".equals(quant24) && quant24.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant24) && quant24.charAt(0)!='-' && Safe(quant24)) {
 			int t=Integer.parseInt(quant24);
 			if("Save 4th stock".equals(SavingStock5)) {
-				User u=settingUser(t);
+				User u=settingUser(t,3);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success4",s);
+				f4=1;
 			}
 			
 		}
-		if(!"".equals(quant25) && quant25.matches("-?\\d+(\\.\\d+)?")) {
+		
+		if(!"".equals(quant25) && quant25.charAt(0)!='-' && Safe(quant25)) {
 			int t=Integer.parseInt(quant25);
 			if("Save 5th stock".equals(SavingStock5)) {
-				User u=settingUser(t);
+				User u=settingUser(t,4);
 				userService.UserUpdateStock(u);
+				s="Successful";
+				model.addAttribute("success5",s);
+				f5=1;
 			}
 			
+		}
+		if(f1==0 && "Save 1st stock".equals(SavingStock5)) {
+			model.addAttribute("failed1", s);
+		}
+		if(f2==0 && "Save 2nd stock".equals(SavingStock5)) {
+			model.addAttribute("failed2", s);
+		}
+		if(f3==0 && "Save 3rd stock".equals(SavingStock5)) {
+			model.addAttribute("failed3", s);
+		}
+		if(f4==0 && "Save 4th stock".equals(SavingStock5)) {
+			model.addAttribute("failed4", s);
+		}
+		if(f5==0 && "Save 5th stock".equals(SavingStock5)) {
+			model.addAttribute("failed5", s);
 		}
 		return "it";
 	}
@@ -478,23 +665,7 @@ public class LoginController {
 		
 		return "welcome";
 	}
-	
-//	@RequestMapping("/error")
-//	public String handleError(HttpServletRequest request) {
-//	    Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-//	    
-//	    if (status != null) {
-//	        Integer statusCode = Integer.valueOf(status.toString());
-//	    
-//	        if(statusCode == HttpStatus.NOT_FOUND.value()) {
-//	            return "error-404";
-//	        }
-//	        else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-//	            return "error-500";
-//	        }
-//	    }
-//	    return "error";
-//	}
+
 	private void setAttribute(ModelMap model) {
 		
 		model.addAttribute(keys[0][0], s1[0][0]);

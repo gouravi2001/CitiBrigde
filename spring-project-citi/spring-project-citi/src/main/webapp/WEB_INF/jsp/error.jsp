@@ -14,7 +14,7 @@
 <div class="container-fluid align-items-center justify-content-center">
 <h1>Something went wrong! </h1>
 <h2>Our Engineers are on it</h2>
-<a href="/"><button class="btn btn-dark btn-block mt-3">Go Home</button></a>
+<a href="welcome"><button class="btn btn-dark btn-block mt-3">Go Home</button></a>
 </div>
 </body>
 </html>

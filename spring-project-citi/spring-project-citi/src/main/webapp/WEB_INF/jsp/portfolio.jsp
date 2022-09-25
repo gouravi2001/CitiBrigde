@@ -1,7 +1,10 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
+<%@page import="java.io.BufferedReader" %>
+<%@page import="java.io.FileReader" %>
+
 
 <%
 String id = request.getParameter("userId");
@@ -18,7 +21,7 @@ try {
 }
 
 Connection connection = null;
-Statement statement = null;
+PreparedStatement statement = null;
 ResultSet resultSet = null;
 %>
 <html>
@@ -85,10 +88,15 @@ ResultSet resultSet = null;
 				<tbody>
 					<%
 					try {
-						connection = DriverManager.getConnection(connectionUrl + dbName, userId, password);
-						statement = connection.createStatement();
-						String sql = "SELECT * FROM userhistory";
+						BufferedReader input = new BufferedReader(new FileReader("C://Users//DeLL//OneDrive//Desktop//user.txt"));
+					    String last = null, line;
 
+					    while ((line = input.readLine()) != null) { 
+					        last = line;
+					    }
+						connection = DriverManager.getConnection(connectionUrl + dbName, userId, password);
+						String sql = "SELECT * FROM userhistory where user_id='"+last+"'";
+						statement= connection.prepareStatement(sql);
 						resultSet = statement.executeQuery(sql);
 						while (resultSet.next()) {
 								%>
